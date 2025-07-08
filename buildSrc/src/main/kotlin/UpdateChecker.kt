@@ -1,10 +1,18 @@
 import org.gradle.api.Project
+import org.gradle.internal.impldep.com.google.gson.JsonParser
 import java.io.File
 import java.net.URL
 import java.net.URLConnection
 
 
 fun URLConnection.applyHeaders() {
+    setRequestProperty("Accept", "application/json, text/plain, */*")
+    setRequestProperty("Origin", "https://im.qq.com")
+    setRequestProperty("Priority", "u=1, i")
+    setRequestProperty("Referer", "https://im.qq.com/")
+    setRequestProperty("Sec-Fetch-Dest", "empty")
+    setRequestProperty("Sec-Fetch-Mode", "cors")
+    setRequestProperty("Sec-Fetch-Site", "cross-site")
     setRequestProperty("User-Agent", "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Mobile Safari/537.36 Edg/129.0.0.0")
 }
 fun get(url: String): String {
@@ -16,13 +24,13 @@ fun get(url: String): String {
 }
 
 fun Project.checkUpdate() {
-    val index = get("https://im.qq.com/index/#downloadAnchor")
-    val regex = Regex("https://[A-Za-z0-9/_.-]+/js/(pc|mobile)[A-Za-z0-9/_.-]+\\.js")
-    val jsLink = regex.find(index)?.value ?: throw IllegalStateException("找不到更新链接 $index")
-    val js = get(jsLink)
-    val regex1 = Regex("\"x64Link\": *\"(https://[A-Za-z0-9/_.-]+\\.apk).*?\"")
-    val apkLink = regex1.find(js)?.groupValues?.get(1) ?: throw IllegalStateException("找不到安装包链接 $js")
-    val version = Regex("\\d+\\.\\d+\\.\\d+").find(apkLink.substringAfterLast('/'))?.value ?: throw IllegalStateException("无法从安装包链接截取版本号 $apkLink")
+    val mobileConfigStr = get("https://cdn-go.cn/qq-web/im.qq.com_new/latest/rainbow/mobileConfig.json")
+    println("已取得更新配置 $mobileConfigStr")
+    val mobileConfig = JsonParser.parseString(mobileConfigStr).asJsonObject
+    val android = mobileConfig["android"]?.asJsonObject ?: throw IllegalStateException("找不到 android")
+    val version = android["version"]?.asString ?: throw IllegalStateException("找不到 android.version")
+    val apkLink = android["x64Link"]?.asString ?: throw IllegalStateException("找不到 android.x64Link")
+    println()
     println(apkLink)
     println(version)
     if (File(rootDir, "master/android_pad/$version.json").exists()) {
