@@ -45,7 +45,7 @@ jobs:
         run: |
           echo "EDEN_VERSION=${{ vars.EDEN_VERSION }}"
           mkdir eden
-          wget --progress=dot:mega -O eden/Eden.apk https://down.hwy.tcdnos.com/qqweb/QQ_1/android_apk/Android_${{ vars.CUSTOM_VERSION }}_64.apk
+          wget --progress=dot:mega -O eden/Eden.apk ${{ vars.CUSTOM_VERSION_URL }}
           wget --progress=dot:mega -O eden.zip https://github.com/MrXiaoM/Eden/releases/download/${{ vars.EDEN_VERSION }}/Eden-${{ vars.EDEN_VERSION }}.zip
           unzip -qoa eden.zip -d eden
           cd eden
