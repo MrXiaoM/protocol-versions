@@ -1,7 +1,7 @@
 # protocol-versions
 latest QQ protocol versions (release).
 
-Update for [trpgbot](https://github.com/MrXiaoM/fpv/tree/trpgbot) plugin. Check update everyday automatically.
+Update for providing basic protocol information. Check update everyday automatically.
 
 > [!WARNING]
 > 
@@ -10,6 +10,6 @@ Update for [trpgbot](https://github.com/MrXiaoM/fpv/tree/trpgbot) plugin. Check 
 
 relate tools:
 - [Eden](https://github.com/MrXiaoM/Eden) (protocol extractor)
-- [fix-protocol-version](https://github.com/cssxsh/fix-protocol-version) (mirai protocol updater)
+- ~~[fix-protocol-version](https://github.com/cssxsh/fix-protocol-version) (mirai protocol updater)~~ deprecated
 
 You can add JVM options `-Dxyz.cssxsh.mirai.tool.FixProtocolVersion.source=MrXiaoM` to use this source on `fix-protocol-version`.
