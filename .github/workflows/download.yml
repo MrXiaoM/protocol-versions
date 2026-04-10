@@ -22,11 +22,11 @@ jobs:
         env:
           CUSTOM_VERSION: ${{ vars.CUSTOM_VERSION }}
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
         with:
           ref: 'update-checker'
       - name: Checkout master branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
         with:
           ref: 'master'
           path: 'master'

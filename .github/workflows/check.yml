@@ -14,11 +14,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
         with:
           ref: 'update-checker'
       - name: Checkout master branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
         with:
           ref: 'master'
           path: 'master'
@@ -33,9 +33,7 @@ jobs:
         with:
           dotnet-version: '6.0.x'
       - name: Check update
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: checkUpdate
+        run: ./gradlew checkUpdate --no-daemon
       - name: Check Result
         run: |
           echo "VERSION_APK=$(cat apk_version)" >> $GITHUB_ENV
